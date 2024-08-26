@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce-portfolio-backend",
+  "version": "1.0.0",
+  "description": "This project is a full-featured E-commerce platform created as a portfolio piece to showcase fullstack development skills. The application is designed to be a web-based, responsive platform suitable for both desktop and mobile devices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
+}
