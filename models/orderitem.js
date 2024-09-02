@@ -15,12 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   OrderItem.init({
     orderId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
-    price: DataTypes.FLOAT
-  }, {
-    sequelize,
-    modelName: 'OrderItem',
-  });
+    productSpecificId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+  },
+    {
+      sequelize,
+      modelName: 'OrderItem',
+    });
   return OrderItem;
 };

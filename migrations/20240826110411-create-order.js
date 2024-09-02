@@ -10,10 +10,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
-      status: {
-        type: Sequelize.STRING
+      orderStatus: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'pending'
+      },
+      paymentStatus: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'pending'
       },
       totalAmount: {
         type: Sequelize.FLOAT

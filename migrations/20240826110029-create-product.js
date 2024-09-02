@@ -10,16 +10,58 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
         type: Sequelize.TEXT
       },
+      length: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      width: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      height: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      weight: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      size: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      material: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      style: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      color: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       price: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        allowNull: true,
       },
       stock: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT,
+        allowNull: true,
+      },
+      categoryId: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

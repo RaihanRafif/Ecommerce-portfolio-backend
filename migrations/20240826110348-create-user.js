@@ -10,19 +10,30 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      address: {
+        type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING
       },
       isAdmin: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      profilePhotoUrl: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

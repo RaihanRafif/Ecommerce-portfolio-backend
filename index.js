@@ -6,10 +6,28 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const userApi = require('./routes/userRoutes')
-app.use("/api", userApi);
-// Test the connection
+const categoryApi = require('./routes/categoryRoutes')
+const productApi = require('./routes/productRoutes')
+const productPhotosApi = require('./routes/productPhotoRoutes')
+const wishlistApi = require('./routes/wishlistRoutes')
+const orderApi = require('./routes/orderRoutes')
+const reviewRoutes = require('./routes/reviewRoutes');
+const errorHandler = require('./utils/errorHandler');
+
+
+
+app.use("/user", userApi);
+app.use('/category', categoryApi);
+app.use('/product', productApi);
+app.use('/productPhoto', productPhotosApi);
+app.use("/user/wishlist", wishlistApi);
+app.use("/order", orderApi);
+app.use('/review', reviewRoutes);
+
+app.use(errorHandler);
 
 sequelize.authenticate()
     .then(() => {
@@ -21,7 +39,3 @@ sequelize.authenticate()
     .catch((err) => {
         console.error('Unable to connect to the database:', err);
     });
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});

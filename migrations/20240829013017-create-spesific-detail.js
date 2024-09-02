@@ -2,40 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('OrderItems', {
+    await queryInterface.createTable('SpesificDetails', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      orderId: {
+      spesificId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
-      productSpecificId : {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('OrderItems');
+    await queryInterface.dropTable('SpesificDetails');
   }
 };

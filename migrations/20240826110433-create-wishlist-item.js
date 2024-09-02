@@ -10,10 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       wishlistId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
-      productId: {
-        type: Sequelize.INTEGER
+      productSpecificId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

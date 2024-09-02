@@ -1,13 +1,20 @@
-// routes/userRoutes.js
-const express = require("express");
-const { createUser, getAllUsers, getUserById, updateUser, deleteUser } = require("../controllers/userController");
+const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/userController');
+const authMiddleware = require('../middleware/auth');
+const upload = require('../middleware/uploadMiddleware');
 
-// Define routes for user operations
-router.post('/users', createUser);
-// router.get('/users', getAllUsers);
-// router.get('/users/:id', getUserById);
-// router.put('/users/:id', updateUser);
-// router.delete('/users/:id', deleteUser);
+router.post('/register', userController.register);
+router.post('/login', userController.login);
 
-module.exports = router
+// Routes protected by the authentication middleware
+router.patch('/update', authMiddleware, userController.updateUser);
+router.patch('/update-password', authMiddleware, userController.updatePassword);
+
+// Profile photo CRUD routes with Multer middleware
+router.post('/profile-photo', authMiddleware, upload.single('photo'), userController.createProfilePhoto);
+router.get('/profile-photo', authMiddleware, userController.getProfilePhoto);
+router.patch('/profile-photo', authMiddleware, upload.single('photo'), userController.updateProfilePhoto);
+router.delete('/profile-photo', authMiddleware, userController.deleteProfilePhoto);
+
+module.exports = router;
