@@ -1,7 +1,7 @@
 const { Cart, CartItem, Order, OrderItem, ProductSpecific, sequelize } = require('../models');
 
 // Create a new order from the cart
-exports.createOrderFromCart = async (req, res) => {
+exports.createOrderFromCart = async (req, res, next) => {
     const t = await sequelize.transaction(); // Start a transaction
 
     try {
@@ -61,12 +61,12 @@ exports.createOrderFromCart = async (req, res) => {
         // Rollback the transaction in case of error
         await t.rollback();
         console.error('Error creating order from cart:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Use next to pass the error to the errorHandler
     }
 };
 
 // Get all orders for a specific user
-exports.getOrders = async (req, res) => {
+exports.getOrders = async (req, res, next) => {
     try {
         const userId = req.user.id;
 
@@ -86,12 +86,12 @@ exports.getOrders = async (req, res) => {
         res.status(200).json(ordersWithItems);
     } catch (error) {
         console.error('Error fetching orders:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Use next to pass the error to the errorHandler
     }
 };
 
 // Update an order's status or payment status
-exports.updateOrder = async (req, res) => {
+exports.updateOrder = async (req, res, next) => {
     try {
         const { orderId } = req.params;
         const { orderStatus, paymentStatus } = req.body;
@@ -110,12 +110,12 @@ exports.updateOrder = async (req, res) => {
         res.status(200).json({ message: 'Order updated successfully', order });
     } catch (error) {
         console.error('Error updating order:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Use next to pass the error to the errorHandler
     }
 };
 
 // Delete an order and its items
-exports.deleteOrder = async (req, res) => {
+exports.deleteOrder = async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
         const { orderId } = req.params;
@@ -137,6 +137,6 @@ exports.deleteOrder = async (req, res) => {
     } catch (error) {
         await t.rollback();
         console.error('Error deleting order:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Use next to pass the error to the errorHandler
     }
 };

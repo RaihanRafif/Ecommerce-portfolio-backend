@@ -1,4 +1,3 @@
-// controllers/productController.js
 const { Product, Category, ProductPhoto, ProductSpecifics, ProductSpesificDetail, SpesificDetail } = require('../models');
 const fs = require('fs');
 const path = require('path');
@@ -12,7 +11,7 @@ const checkAdmin = (req, res, next) => {
 };
 
 // Updated createProduct with file upload
-exports.createProduct = [checkAdmin, async (req, res) => {
+exports.createProduct = [checkAdmin, async (req, res, next) => {
     try {
         let { name, description, price, categoryId, length, width, height, status = "new", material, style, color, size, stock, weight } = req.body;
 
@@ -77,13 +76,11 @@ exports.createProduct = [checkAdmin, async (req, res) => {
 
         res.status(201).json(product);
     } catch (error) {
-        console.error('Error creating product:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 }];
 
-
-exports.getProduct = async (req, res) => {
+exports.getProduct = async (req, res, next) => {
     try {
         const { id } = req.params; // Get the product ID from the request parameters
 
@@ -197,12 +194,11 @@ exports.getProduct = async (req, res) => {
             res.status(200).json(products);
         }
     } catch (error) {
-        console.error('Error fetching product:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deleteProduct = [checkAdmin, async (req, res, next) => {
     try {
         const { id } = req.params; // Get the product ID from the request parameters
 
@@ -237,12 +233,11 @@ exports.deleteProduct = async (req, res) => {
 
         res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
-        console.error('Error deleting product:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
-};
+}];
 
-exports.updateProduct = async (req, res) => {
+exports.updateProduct = [checkAdmin, async (req, res, next) => {
     try {
         const { id } = req.params; // Get the product ID from the request parameters
 
@@ -317,7 +312,6 @@ exports.updateProduct = async (req, res) => {
 
         res.status(200).json({ message: 'Product updated successfully' });
     } catch (error) {
-        console.error('Error updating product:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
-};
+}];

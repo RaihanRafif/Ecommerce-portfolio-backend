@@ -1,8 +1,8 @@
-// controllers/reviewController.js
 const { Review, Order, OrderItem } = require('../models'); // Import necessary models
 const { sequelize } = require('../models');
 
-exports.createReview = async (req, res) => {
+// Create a review for a product
+exports.createReview = async (req, res, next) => {
     const { productId, rating, comment } = req.body; // Extract productId, rating, and comment from the request body
     const userId = req.user.id; // Assuming user authentication is handled, and user ID is available in the request
 
@@ -40,37 +40,34 @@ exports.createReview = async (req, res) => {
 
         res.status(201).json({ message: 'Review added successfully', review });
     } catch (error) {
-        console.error('Error creating review:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };
 
 // Get all reviews for a specific product
-exports.getReviewsByProduct = async (req, res) => {
+exports.getReviewsByProduct = async (req, res, next) => {
     const { productId } = req.params;
     try {
         const reviews = await Review.findAll({ where: { productId } });
         res.status(200).json(reviews);
     } catch (error) {
-        console.error('Error fetching reviews for product:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };
 
 // Get all reviews by a specific user
-exports.getReviewsByUser = async (req, res) => {
+exports.getReviewsByUser = async (req, res, next) => {
     const { userId } = req.params;
     try {
         const reviews = await Review.findAll({ where: { userId } });
         res.status(200).json(reviews);
     } catch (error) {
-        console.error('Error fetching reviews for user:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };
 
 // Update a review
-exports.updateReview = async (req, res) => {
+exports.updateReview = async (req, res, next) => {
     const { reviewId } = req.params;
     const { rating, comment } = req.body;
     const userId = req.user.id; // Assuming user authentication is handled
@@ -88,13 +85,12 @@ exports.updateReview = async (req, res) => {
 
         res.status(200).json({ message: 'Review updated successfully', review });
     } catch (error) {
-        console.error('Error updating review:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };
 
 // Delete a review
-exports.deleteReview = async (req, res) => {
+exports.deleteReview = async (req, res, next) => {
     const { reviewId } = req.params;
     const userId = req.user.id; // Assuming user authentication is handled
 
@@ -108,7 +104,6 @@ exports.deleteReview = async (req, res) => {
         await review.destroy();
         res.status(200).json({ message: 'Review deleted successfully' });
     } catch (error) {
-        console.error('Error deleting review:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        next(error); // Pass error to error handler
     }
 };

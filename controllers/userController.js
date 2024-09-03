@@ -159,7 +159,6 @@ exports.updatePassword = async (req, res, next) => {
     }
 };
 
-
 // Create a profile photo
 exports.createProfilePhoto = async (req, res, next) => {
     try {
