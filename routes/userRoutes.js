@@ -9,7 +9,6 @@ router.post('/login', userController.login);
 
 // Routes protected by the authentication middleware
 router.patch('/update', authMiddleware, userController.updateUser);
-router.patch('/update-password', authMiddleware, userController.updatePassword);
 
 // Profile photo CRUD routes with Multer middleware
 router.post('/profile-photo', authMiddleware, upload.single('photo'), userController.createProfilePhoto);

@@ -24,7 +24,11 @@ const upload = multer({
         if (mimeType && extName) {
             return cb(null, true);
         }
-        cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        const error = new Error('Invalid photo format');
+        error.statusCode = 400;
+
+    
+        cb(error);
     }
 });
 

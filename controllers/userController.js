@@ -2,10 +2,11 @@
 const { User, UserProfilePhoto, Wishlist } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+const fs = require('fs');
 const { validationResult } = require('express-validator');
 const Joi = require('joi'); // for input validation
 const { ErrorHandler } = require('../utils/errorHandler');
+const path = require('path'); // Import path module
 
 const registerSchema = Joi.object({
     firstName: Joi.string().min(2).required(),
@@ -39,7 +40,7 @@ exports.register = async (req, res, next) => {
         // Create the user with the hashed password
         user = await User.create({ firstName, lastName, email, password: hashedPassword });
 
-        await Wishlist.create({ name: "general", userId });
+        await Wishlist.create({ name: "general", userId: user.id });
 
 
         // Respond with a success message
@@ -124,40 +125,6 @@ exports.updateUser = async (req, res, next) => {
     }
 };
 
-// Update user password
-exports.updatePassword = async (req, res, next) => {
-    try {
-        const { id } = req.user;
-        const { currentPassword, newPassword } = req.body;
-
-        let user = await User.findByPk(id);
-
-        if (!user) {
-            const error = new Error('User not found');
-            error.statusCode = 404;
-            return next(error);
-        }
-
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-
-        if (!isMatch) {
-            const error = new Error('Current password is incorrect');
-            error.statusCode = 400;
-            return next(error);
-        }
-
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
-
-        await user.save();
-
-        res.status(200).json({ message: 'Password updated successfully' });
-    } catch (error) {
-        console.error('Error updating password:', error);
-        error.statusCode = 500;
-        next(error);
-    }
-};
 
 // Create a profile photo
 exports.createProfilePhoto = async (req, res, next) => {
