@@ -60,7 +60,7 @@ This project is a full-featured E-commerce platform created as a portfolio piece
 - **Express.js**
 
 ### Database
-- **MongoDB** or **PostgreSQL**
+- **MySql**
 
 ### Authentication
 - **JWT (JSON Web Tokens)**

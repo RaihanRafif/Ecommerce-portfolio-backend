@@ -21,7 +21,10 @@ const upload = multer({
         const mimeType = fileTypes.test(file.mimetype);
         const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
 
+        console.log("2222");
+        
         if (mimeType && extName) {
+            console.log("33333");
             return cb(null, true);
         }
         const error = new Error('Invalid photo format');

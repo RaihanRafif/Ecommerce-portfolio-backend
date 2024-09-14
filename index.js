@@ -1,12 +1,15 @@
 // server.js
 const express = require('express');
 const sequelize = require('./config/db'); // Import the sequelize instance
+const morgan = require('morgan');
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(morgan('common'));
 
 const userApi = require('./routes/userRoutes')
 const categoryApi = require('./routes/categoryRoutes')
@@ -16,6 +19,7 @@ const wishlistApi = require('./routes/wishlistRoutes')
 const orderApi = require('./routes/orderRoutes')
 const reviewRoutes = require('./routes/reviewRoutes');
 const errorHandler = require('./utils/errorHandler');
+
 
 
 

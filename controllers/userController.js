@@ -132,6 +132,9 @@ exports.createProfilePhoto = async (req, res, next) => {
         const { id } = req.user;
         const photoFilename = req.file ? path.basename(req.file.path) : null;
 
+        console.log("1111", photoFilename);
+
+
         if (!photoFilename) {
             const error = new Error('No photo uploaded');
             error.statusCode = 400;
