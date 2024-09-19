@@ -31,7 +31,7 @@ exports.createWishlist = async (req, res) => {
     }
 };
 
-exports.appProductToWishlist = async (req, res) => {
+exports.addProductToWishlist = async (req, res) => {
     try {
         const { productSpecificId, wishlistGroupName = "general" } = req.body;
         const userId = req.user.id
